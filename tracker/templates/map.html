@@ -1,0 +1,45 @@
+{% extends 'partials/base.html' %}
+
+{% block content %}
+    <div class="container-fluid mt-4 pt-3">
+        <div class="row">
+            <div class="col-sm-8 border border-start-0 border-secondary">
+                <h3 class="text-center">Map</h3>
+                {{m | safe}}
+            </div>
+            <div class="col-sm-4 border border-secondary">
+                <h3 class="text-center">Info</h3>
+                <table class="table table-striped table-dark">
+                    <thead>
+                      <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Имя</th>
+                        <th scope="col">Фамилия</th>
+                        <th scope="col">Username</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <th scope="row">1</th>
+                        <td>Mark</td>
+                        <td>Otto</td>
+                        <td>@mdo</td>
+                      </tr>
+                      <tr>
+                        <th scope="row">2</th>
+                        <td>Jacob</td>
+                        <td>Thornton</td>
+                        <td>@fat</td>
+                      </tr>
+                      <tr>
+                        <th scope="row">3</th>
+                        <td>Larry</td>
+                        <td>the Bird</td>
+                        <td>@twitter</td>
+                      </tr>
+                    </tbody>
+                  </table>
+            </div>
+        </div>
+    </div>
+{% endblock %}
