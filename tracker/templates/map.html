@@ -42,9 +42,9 @@
                   </table>
                   {% comment %} В этом блоке я хочу вывести сообщение {% endcomment %}
                   <div>                 
-                    <form id="refresh-form">
-                      <button type="submit">Refresh</button>
-                    </form>
+                    <button id = "refresh-btn">Refresh</button>
+                    
+                    
                     <div id="chat">
                       <div class="form-group">
                         <label for="exampleFormControlTextarea1">Example textarea</label>
@@ -54,21 +54,16 @@
                   </div>
                   
                   <script>
-                    const refreshForm = document.getElementById('refresh-form');
-                    const chatTextarea = document.getElementById('exampleFormControlTextarea1');
-                    
-                    refreshForm.addEventListener('submit', (event) => {
-                      event.preventDefault();
-                      fetch('/chat/')
-                        .then(response => response.json())
-                        .then(data => chatTextarea.value = data.message)
-                        .catch(error => console.error(error));
-                    });
+                    var refreshForm = document.getElementById('refresh-btn');
+                    var chatTextarea = document.getElementById('exampleFormControlTextarea1');
+                    chatTextarea.value = ""
+                    function updateTextArea(response) {
+                      document.getElementById('exampleFormControlTextarea1').value = response.message;}
+                    document.getElementById('refresh-btn').addEventListener('click', () => {fetch('/map/chat/')
+                    .then(response => response.json())
+                    .then(response_json => updateTextArea(response_json))
+                    .catch(err => console.log(err));})
                   </script>
-                  
-                
-                  
-                            
             </div>
         </div>
     </div>
