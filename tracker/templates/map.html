@@ -41,33 +41,31 @@
                     </tbody>
                   </table>
                   {% comment %} В этом блоке я хочу вывести сообщение {% endcomment %}
-                  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
                   <div>                 
-                    <form id="refresh-form" action="{% url 'chat' %}">
-                        <input type="submit" value="Refresh">
+                    <form id="refresh-form">
+                      <button type="submit">Refresh</button>
                     </form>
                     <div id="chat">
-                        <div class="form-group">
-                            <label for="exampleFormControlTextarea1">Example textarea</label>
-                            <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
-                        </div>
+                      <div class="form-group">
+                        <label for="exampleFormControlTextarea1">Example textarea</label>
+                        <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+                      </div>
                     </div>
-                </div>
-                
-                <script>
-                $(document).ready(function() {
-                    $("#refresh-form").submit(function(event) {
-                        event.preventDefault();
-                        $.ajax({
-                            url: $(this).attr("action"),
-                            type: 'GET',
-                            success: function(response) {
-                                $('#exampleFormControlTextarea1').html(response.message);
-                            }
-                        });
+                  </div>
+                  
+                  <script>
+                    const refreshForm = document.getElementById('refresh-form');
+                    const chatTextarea = document.getElementById('exampleFormControlTextarea1');
+                    
+                    refreshForm.addEventListener('submit', (event) => {
+                      event.preventDefault();
+                      fetch('/chat/')
+                        .then(response => response.json())
+                        .then(data => chatTextarea.value = data.message)
+                        .catch(error => console.error(error));
                     });
-                });
-                </script>
+                  </script>
+                  
                 
                   
                             
