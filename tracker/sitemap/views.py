@@ -108,6 +108,7 @@ def map(request):
     }
     return render(request, 'map.html', context)
 
+
 def chat(request):
     message = 'Hello, world!'
     data = {'message': message}
