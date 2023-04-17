@@ -1,6 +1,9 @@
 from django.shortcuts import render
 from django.http import JsonResponse
 import folium
+# from static.com import route 
+
+
 
 
 # Create your views here.
@@ -105,6 +108,8 @@ def map(request):
     }
     return render(request, 'map.html', context)
 
+
 def chat(request):
-    message = "Hello, world!"
-    return JsonResponse({'message': message})
+    message = 'Hello, world!'
+    data = {'message': message}
+    return JsonResponse(data)

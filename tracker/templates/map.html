@@ -4,11 +4,11 @@
 {% block content %}
     <div class="container-fluid mt-4 pt-3">
         <div class="row">
-            <div class="col-sm-8 border border-start-0 border-secondary">
+            <div class="col-sm-7 border border-start-0 border-secondary">
                 <h3 class="text-center">Map</h3>
                 {{m | safe}}
             </div>
-            <div class="col-sm-4 border border-secondary">
+            <div class="col-sm-5 border border-secondary">
                 <h3 class="text-center">Info</h3>
                 <table class="table table-striped table-dark">
                     <thead>
@@ -16,10 +16,10 @@
                         <th scope="col">#</th>
                         <th scope="col">Имя</th>
                         <th scope="col">Фамилия</th>
-                        <th scope="col">Username</th>
+                        <th scope="col" class="username">LoRa message</th>
                       </tr>
                     </thead>
-                    <tbody>
+                    <tbody id="table-data">
                       <tr>
                         <th scope="row">1</th>
                         <td>Mark</td>
@@ -40,37 +40,42 @@
                       </tr>
                     </tbody>
                   </table>
+                  <script>
+                    fetch('/map/chat/')
+                      .then(response => response.json())
+                      .then(data => {
+                        const rows = document.getElementsByTagName('tr');
+                        for (let i = 1; i < rows.length; i++) {
+                          const cells = rows[i].getElementsByTagName('td');
+                          cells[2].innerText = data.message;
+                        }
+                      });
+                  </script>
+                
                   {% comment %} В этом блоке я хочу вывести сообщение {% endcomment %}
-                  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
                   <div>                 
-                    <form id="refresh-form" action="{% url 'chat' %}">
-                        <input type="submit" value="Refresh">
-                    </form>
+                    <button id = "refresh-btn">Refresh</button>
+                    
+                    
                     <div id="chat">
-                        <div class="form-group">
-                            <label for="exampleFormControlTextarea1">Example textarea</label>
-                            <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
-                        </div>
+                      <div class="form-group">
+                        <label for="exampleFormControlTextarea1">Example textarea</label>
+                        <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+                      </div>
                     </div>
-                </div>
-                
-                <script>
-                $(document).ready(function() {
-                    $("#refresh-form").submit(function(event) {
-                        event.preventDefault();
-                        $.ajax({
-                            url: $(this).attr("action"),
-                            type: 'GET',
-                            success: function(response) {
-                                $('#exampleFormControlTextarea1').html(response.message);
-                            }
-                        });
-                    });
-                });
-                </script>
-                
+                  </div>
                   
-                            
+                  <script>
+                    var refreshForm = document.getElementById('refresh-btn');
+                    var chatTextarea = document.getElementById('exampleFormControlTextarea1');
+                    chatTextarea.value = ""
+                    function updateTextArea(response) {
+                      document.getElementById('exampleFormControlTextarea1').value = response.message;}
+                    document.getElementById('refresh-btn').addEventListener('click', () => {fetch('/map/chat/')
+                    .then(response => response.json())
+                    .then(response_json => updateTextArea(response_json))
+                    .catch(err => console.log(err));})
+                  </script>
             </div>
         </div>
     </div>
